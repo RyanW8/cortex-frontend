@@ -103,6 +103,9 @@
           "configurations": {
             "production": {
               "browserTarget": "cortex-frontend:build:production"
+            },
+            "n4production": {
+              "browserTarget": "cortex-frontend:build:n4production"
             }
           }
         },

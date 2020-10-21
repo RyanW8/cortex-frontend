@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {environment} from "../../environments/environment";
 import {AlertService} from '../alerts/alert.service';
-import {ApiUtils} from "../utils/api-utils";
 import {ApiObjectService} from "../apidatatable/apiObject.service";
 
 @Injectable({providedIn: 'root'})

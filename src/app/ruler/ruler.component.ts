@@ -138,6 +138,14 @@ export class RulerComponent extends ApidatatableComponent implements OnInit {
         })[0]
     }
 
+    exportRuleGroups() {
+        for (var nameSpace of Object.keys(this.selectedTenantRuleGroups)) {
+            var FileSaver = require('file-saver');
+            var ruleGroupsYAML = this.rulerService.JSONToYAML(this.selectedTenantRuleGroups[nameSpace])
+            var blob = new Blob([ruleGroupsYAML], {type: 'text/plain;chartset=utf-8'});
+            FileSaver.saveAs(blob, nameSpace + '.yml')
+        }
+    }
 
     ngOnInit() {
         this.configuration = ConfigService.config;
