@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cortex-frontend
+  namespace: {{NAMESPACE}}
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: cortex-frontend
+  template:
+    metadata:
+      labels:
+        name: cortex-frontend
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                name: cortex-frontend
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - image: {{<registry>/<image_name>:<version>}}
+        imagePullPolicy: IfNotPresent
+        name: cortex-frontend
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: 1Gi

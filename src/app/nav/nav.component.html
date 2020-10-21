@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <img class="navbar-brand" routerLink="/home" height="50px" src="/assets/cortex-horizontal-color.png"
+       alt="Cortex Logo"/>
+  <ul class="nav mr-auto">
+    <li *ngFor="let menuitem of menu" class="nav-item dropdown mr-3">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdown" ngbDropdownToggle>{{menuitem.name}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdown">
+          <button *ngFor="let route of menuitem.routes" ngbDropdownItem routerLink="{{route.path}}">{{route.name}}</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,18 @@
+@import "~ngx-easy-table/style";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.network-config {
+    white-space: pre-wrap;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

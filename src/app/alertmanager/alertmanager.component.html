@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ngx-table #table [configuration]="configuration" [data]="data" [columns]="columns"></ngx-table>
+        </div>
+    </div>
+
+</div>
+<ng-template #actionsTemplate let-row>
+    <button style="text-align: center" class="btn btn-warning mr-2 btn-sm" (click)="openEditConfigComponent(row)">Edit Config</button>
+    <button style="text-align: center" class="btn btn-danger mr-2 btn-sm" (click)="deleteTenantConfig(row)">Delete Config</button>
+</ng-template>

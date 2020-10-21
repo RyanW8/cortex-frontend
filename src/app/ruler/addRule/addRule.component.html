@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form class="form">
+                <div class="form-group">
+                    <label for="nameSpace">Namespace</label>
+                    <input class="form-control" id="nameSpace" name="nameSpace" [(ngModel)]="nameSpace"
+                           placeholder="Namespace for the rule group to belong to"/>
+                </div>
+                <div class="form-group">
+                    <label for="ruleYAML">Rule Group YAML</label>
+                    <textarea rows="15" class="form-control" id="ruleYAML" name="ruleYAML" [(ngModel)]="ruleGroupYAML"
+                              placeholder="YAML Configuration"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success mr-3" (click)="save()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
