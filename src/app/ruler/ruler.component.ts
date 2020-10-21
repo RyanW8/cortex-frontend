@@ -69,6 +69,32 @@ export class RulerComponent extends ApidatatableComponent implements OnInit {
         }
     }
 
+
+    createRuleGroup(tenantID: string, nameSpace: string, ruleYAML: string, ruleObject: {}) {
+        this.rulerService.createRuleGroup(
+            tenantID, nameSpace, ruleYAML
+        ).subscribe(apiResponse => {
+            if (apiResponse['status'] === 'success') {
+                // @ts-ignore
+                this.alertService.success('Successfully deleted Rule "' + ruleObject["rule"] + '"');
+            } else {
+                this.alertService.error('Failed to delete Rule "' + ruleObject["rule"] + '"');
+            }
+        })
+    }
+
+    deleteRuleGroup(tenantID: string, nameSpace: string, ruleGroupName: string, ruleObject: {}) {
+        this.rulerService.deleteRuleGroup(tenantID, nameSpace, ruleGroupName).subscribe(
+            apiResponse => {
+                if (apiResponse['status'] === 'success') {
+                    this.alertService.success('Successfully deleted RuleGroup "' + ruleObject["rulegroup_name"] + '"');
+                } else {
+                    this.alertService.error('Failed to delete RuleGroup "' + ruleObject["rulegroup_name"] + '"');
+                }
+            }
+        )
+    }
+
     removeRule(object: any): void {
         let ruleGroupRules = this.getRuleGroupFromTenant(object.rulegroup_name).rules.filter(function (obj) {
             return obj.alert !== object.rule;
@@ -79,41 +105,21 @@ export class RulerComponent extends ApidatatableComponent implements OnInit {
                 'rules': ruleGroupRules
             }
             const yamlRuleGroup = this.rulerService.JSONToYAML(structuredRuleGroupContent);
-            this.rulerService.createRuleGroup(this.selectedTenant.userID, object.namespace, yamlRuleGroup).subscribe(
-                apiResponse => {
-                    if (apiResponse['status'] === 'success') {
-                        this.alertService.success('Successfully deleted Rule "' + object.rule + '"');
-                    } else {
-                        this.alertService.error('Failed to delete Rule "' + object.rule + '"');
-                    }
-                }
-            )
+            this.createRuleGroup(this.selectedTenant.userID, object.namespace, yamlRuleGroup, object);
         } else {
-            this.rulerService.deleteRuleGroup(this.selectedTenant.userID, object.namespace, object.rulegroup_name).subscribe(
-                apiResponse => {
-                    if (apiResponse['status'] === 'success') {
-                        this.alertService.success('Successfully deleted RuleGroup "' + object.rulegroup_name + '"');
-                    } else {
-                        this.alertService.error('Failed to delete RuleGroup "' + object.rulegroup_name + '"');
-                    }
-                }
-            )
+            this.deleteRuleGroup(this.selectedTenant.userID, object.namespace, object.rulegroup_name, object);
         }
     }
 
     openEditRuleComponent(object: any) {
+        const modalRef = this.modalService.open(AddRuleComponent, {size: 'lg'});
+        modalRef.componentInstance.existingTenantRuleGroups = this.selectedTenantRuleGroups;
+        modalRef.componentInstance.tenantName = this.selectedTenant.userID;
         if (object === undefined) {
-            const modalRef = this.modalService.open(AddRuleComponent, {size: 'lg'});
-            modalRef.componentInstance.existingTenantRuleGroups = this.selectedTenantRuleGroups;
-            modalRef.componentInstance.tenantName = this.selectedTenant.userID;
             modalRef.result.then(result => {
                 this.getData()
             }).catch(reason => null);
-
         } else {
-            const modalRef = this.modalService.open(AddRuleComponent, {size: 'lg'});
-            modalRef.componentInstance.existingTenantRuleGroups = this.selectedTenantRuleGroups;
-            modalRef.componentInstance.tenantName = this.selectedTenant.userID;
             modalRef.componentInstance.nameSpace = object.namespace;
             modalRef.componentInstance.ruleGroupYAML = this.rulerService.JSONToYAML(
                 this.selectedTenantRuleGroups[object.namespace].filter(ruleGroup => ruleGroup.name === object.rulegroup_name)[0]
