@@ -13,6 +13,7 @@ Ruler:
  - Creation of rule groups for tenants
  - Editing of existing rule groups for tenants
  - Removal of rule groups for tenants
+ - Exporting of rule groups for tenants
 
 AlertManager:
  - Creation of AlertManager config for tenants
