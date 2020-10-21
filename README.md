@@ -1,5 +1,13 @@
 # Cortex Frontend
 
+## Tenant Alerting & Recording Rules
+
+![cortex_frontend_ruler](docs/images/frontend_ruler.PNG)
+
+## Tenant AlertManager Configuration
+
+![cortext_frontend_alertmanager](docs/images/frontend_am.PNG)
+
 ## Requirements
 
 - Connections to Cortex Components must be proxied with the appropriate CORS headers setup; for example we're using HAProxy with the CORS LUA Library (https://github.com/haproxytech/haproxy-lua-cors)
